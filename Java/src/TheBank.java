@@ -1,7 +1,8 @@
-public class TheBank implements IBank{
+
+public class TheBank implements IBank {
+}
     @Override
     public void OpenACCOUNT(IAccount account) {
-
     }
 
     @Override
