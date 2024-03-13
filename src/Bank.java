@@ -1,4 +1,5 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Bank implements IBank {
     private List<IAccount> allAccounts;
@@ -12,17 +13,26 @@ public class Bank implements IBank {
         this.allAccounts.add(account);
     }
 
-    @Override
-    public void CloseAccount(int accountNumber) {
+    private IAccount GetAccount(int accountNumber) {
         for (IAccount account : this.allAccounts) {
             if (account.GetAccountNumber() == accountNumber) {
-                if (account.GetCurrentBalance() >= 0) //We also considered the case where the balance equals 0.
-                {
-                    this.allAccounts.remove(account);
-                } else {
-                    System.out.println("Account is not closed due to debt.");
-                }
+                return account;
             }
+        }
+        return null;
+    }
+
+    @Override
+    public void CloseAccount(int accountNumber) {
+        IAccount account = this.GetAccount(accountNumber);
+        if (account == null) {
+            return;
+        }
+
+        if (account.GetCurrentBalance() >= 0) {
+            this.allAccounts.remove(account);
+        } else {
+            System.out.println("Account is not closed due to debt.");
         }
     }
 
@@ -53,4 +63,3 @@ public class Bank implements IBank {
         return positiveAccounts;
     }
 }
-
