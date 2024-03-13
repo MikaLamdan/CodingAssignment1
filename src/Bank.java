@@ -1,9 +1,9 @@
 import java.util.*;
 
-public class TheBank implements IBank {
+public class Bank implements IBank {
     private List<IAccount> allAccounts;
 
-    public TheBank() {
+    public Bank() {
         this.allAccounts = new ArrayList<IAccount>();
     }
 
