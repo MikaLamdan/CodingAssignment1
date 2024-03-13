@@ -1,30 +1,31 @@
-public class StandardAccount implements IAccount{
+public class StandardAccount implements IAccount {
     private int accountNumber;
     private double creditLimit;
     private double currentBalance;
-public StandardAccount(int accountNumber, double creditLimit,double currentBalance) {
 
-    this.accountNumber = accountNumber;
-    this.creditLimit = creditLimit;
-    this.currentBalance = currentBalance;
-}
+    public StandardAccount(int accountNumber, double creditLimit) {
+        this.accountNumber = accountNumber;
+        this.creditLimit = Math.min(creditLimit, 0);
+        this.currentBalance = 0;
+    }
 
     @Override
     public void Deposit(double amount) {
-    this.currentBalance = this.currentBalance + amount;
+        if (amount > 0) {
+            this.currentBalance += amount;
+        }
     }
 
     @Override
     public double Withdraw(double amount) {
-        if (amount <= this.currentBalance) {
-            this.currentBalance = this.currentBalance - amount;
-            return amount;
-        } else {
-            this.currentBalance = this.currentBalance - this.currentBalance + Math.abs(this.creditLimit);
-            return this.currentBalance + Math.abs(this.creditLimit);
+        if (amount <= 0) {
+            return 0;
         }
-    }
 
+        amount = Math.min(amount, this.currentBalance - this.creditLimit);
+        this.currentBalance -= amount;
+        return amount;
+    }
 
     @Override
     public double GetCurrentBalance() {
@@ -36,21 +37,4 @@ public StandardAccount(int accountNumber, double creditLimit,double currentBalan
         return this.accountNumber;
     }
 
-
-    public void setAccountNumber(int accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
-    public double getCreditLimit() {
-        return creditLimit;
-    }
-
-    public void setCreditLimit(double creditLimit) {
-        this.creditLimit = creditLimit;
-    }
-
-
-    public void setCurrentBalance(double currentBalance) {
-        this.currentBalance = currentBalance;
-    }
 }

@@ -2,21 +2,25 @@ public class PremiumAccount implements IAccount {
     private int accountNumber;
     private double currentBalance;
 
-    public PremiumAccount(int accountNumber,double currentBalance){
-
+    public PremiumAccount(int accountNumber) {
         this.accountNumber = accountNumber;
-        this.currentBalance = currentBalance;
+        this.currentBalance = 0;
     }
 
     @Override
     public void Deposit(double amount) {
-        this.currentBalance = this.currentBalance + amount;
-
+        if (amount > 0) {
+            this.currentBalance += amount;
+        }
     }
 
     @Override
     public double Withdraw(double amount) {
-     this.currentBalance = this.currentBalance - amount;
+        if (amount <= 0) {
+            return 0;
+        }
+
+        this.currentBalance -= amount;
         return amount;
     }
 
@@ -30,12 +34,4 @@ public class PremiumAccount implements IAccount {
         return this.accountNumber;
     }
 
-
-    public void setAccountNumber(int accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
-    public void setCurrentBalance(double currentBalance) {
-        this.currentBalance = currentBalance;
-    }
 }
